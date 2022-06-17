@@ -1,30 +1,30 @@
-const Utility = require('../utility');
-const serverOpcodes = require('../opcodes/server');
+import Utility from '../utility';
+import serverOpcodes from '../opcodes/server';
 
 function fromCharArray(a) {
-    return Array.from(a).map(c => String.fromCharCode(c)).join('');
+	return Array.from(a)
+		.map((c) => String.fromCharCode(c))
+		.join('');
 }
 
 module.exports = {
-    [serverOpcodes.OPTION_LIST]: function (data) {
-        this.showOptionMenu = true;
+	[serverOpcodes.OPTION_LIST]: function (data) {
+		this.showOptionMenu = true;
 
-        const count = Utility.getUnsignedByte(data[1]);
-        this.optionMenuCount = count;
+		const count = Utility.getUnsignedByte(data[1]);
+		this.optionMenuCount = count;
 
-        let offset = 2;
+		let offset = 2;
 
-        for (let i = 0; i < count; i++) {
-            const entryLength = Utility.getUnsignedByte(data[offset++]);
+		for (let i = 0; i < count; i++) {
+			const entryLength = Utility.getUnsignedByte(data[offset++]);
 
-            this.optionMenuEntry[i] = fromCharArray(
-                data.slice(offset, offset + entryLength)
-            );
+			this.optionMenuEntry[i] = fromCharArray(data.slice(offset, offset + entryLength));
 
-            offset += entryLength;
-        }
-    },
-    [serverOpcodes.OPTION_LIST_CLOSE]: function () {
-        this.showOptionMenu = false;
-    }
+			offset += entryLength;
+		}
+	},
+	[serverOpcodes.OPTION_LIST_CLOSE]: function () {
+		this.showOptionMenu = false;
+	}
 };

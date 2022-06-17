@@ -1,4 +1,4 @@
-const Utility = require('./utility');
+import Utility from './utility';
 
 const SLEEP_WIDTH = 255;
 const SLEEP_HEIGHT = 40;

@@ -1,58 +1,58 @@
-const { uid } = require('rand-token');
+import { uid } from 'rand-token';
 
 class WorkerSocket {
-    constructor(worker) {
-        this.worker = worker;
-        this.id = uid(64);
+	constructor(worker) {
+		this.worker = worker;
+		this.id = uid(64);
 
-        this.worker.onmessage = (e) => {
-            if (e.data.id !== this.id) {
-                return;
-            }
+		this.worker.onmessage = (e) => {
+			if (e.data.id !== this.id) {
+				return;
+			}
 
-            if (e.data.type === 'data') {
-                this.dispatchEvent('message', e.data);
-            } else if (e.data.type === 'disconnect') {
-                this.dispatchEvent('close');
-            }
-        };
+			if (e.data.type === 'data') {
+				this.dispatchEvent('message', e.data);
+			} else if (e.data.type === 'disconnect') {
+				this.dispatchEvent('close');
+			}
+		};
 
-        this.handlers = {};
+		this.handlers = {};
 
-        setTimeout(() => {
-            this.worker.postMessage({ id: this.id, type: 'connect' });
-            this.dispatchEvent('open');
-        }, 1);
-    }
+		setTimeout(() => {
+			this.worker.postMessage({ id: this.id, type: 'connect' });
+			this.dispatchEvent('open');
+		}, 1);
+	}
 
-    send(data) {
-        this.worker.postMessage({
-            id: this.id,
-            type: 'data',
-            data
-        });
-    }
+	send(data) {
+		this.worker.postMessage({
+			id: this.id,
+			type: 'data',
+			data
+		});
+	}
 
-    dispatchEvent(name, args) {
-        const cb = this.handlers[name];
+	dispatchEvent(name, args) {
+		const cb = this.handlers[name];
 
-        if (cb) {
-            cb(args);
-        }
-    }
+		if (cb) {
+			cb(args);
+		}
+	}
 
-    addEventListener(name, cb) {
-        this.handlers[name] = cb;
-    }
+	addEventListener(name, cb) {
+		this.handlers[name] = cb;
+	}
 
-    close() {
-        postMessage({
-            id: this.id,
-            type: 'disconnect'
-        });
+	close() {
+		postMessage({
+			id: this.id,
+			type: 'disconnect'
+		});
 
-        this.dispatchEvent('close');
-    }
+		this.dispatchEvent('close');
+	}
 }
 
 module.exports = WorkerSocket;

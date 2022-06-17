@@ -1,8 +1,8 @@
-const GameData = require('./game-data');
-const Scene = require('./scene');
-const GameModel = require('./game-model');
-const Utility = require('./utility');
-const ndarray = require('ndarray');
+import GameData from './game-data';
+import Scene from './scene';
+import GameModel from './game-model';
+import Utility from './utility';
+import ndarray from 'ndarray';
 
 class World {
     constructor(scene, surface) {

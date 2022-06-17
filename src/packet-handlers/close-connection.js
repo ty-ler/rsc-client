@@ -1,7 +1,7 @@
-const serverOpcodes = require('../opcodes/server');
+import serverOpcodes from '../opcodes/server';
 
 module.exports = {
-    [serverOpcodes.CLOSE_CONNECTION]: function () {
-        this.closeConnection();
-    }
+	[serverOpcodes.CLOSE_CONNECTION]: function () {
+		this.closeConnection();
+	}
 };

@@ -1,7 +1,7 @@
-const serverOpcodes = require('../opcodes/server');
+import serverOpcodes from '../opcodes/server';
 
 module.exports = {
-    [serverOpcodes.PLAYER_DIED]: function () {
-        this.deathScreenTimeout = 250;
-    }
+	[serverOpcodes.PLAYER_DIED]: function () {
+		this.deathScreenTimeout = 250;
+	}
 };

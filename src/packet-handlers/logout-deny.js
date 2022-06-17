@@ -1,7 +1,7 @@
-const serverOpcodes = require('../opcodes/server');
+import serverOpcodes from '../opcodes/server';
 
 module.exports = {
-    [serverOpcodes.LOGOUT_DENY]: function () {
-        this.cantLogout();
-    }
+	[serverOpcodes.LOGOUT_DENY]: function () {
+		this.cantLogout();
+	}
 };
