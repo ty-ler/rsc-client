@@ -1,5 +1,37 @@
 class Color {
-    constructor(r, g, b, a = 255) {
+    r: any;
+    g: any;
+    b: any;
+    a: number;
+
+    static white: Color;
+    static WHITE: any;
+    static lightGray: Color;
+    static LIGHT_GRAY: any;
+    static gray: Color;
+    static GRAY: any;
+    static darkGray: Color;
+    static DARK_GRAY: any;
+    static black: Color;
+    static BLACK: any;
+    static red: Color;
+    static RED: any;
+    static pink: Color;
+    static PINK: any;
+    static orange: Color;
+    static ORANGE: any;
+    static yellow: Color;
+    static YELLOW: any;
+    static green: Color;
+    static GREEN: any;
+    static magenta: Color;
+    static MAGENTA: any;
+    static cyan: Color;
+    static CYAN: any;
+    static blue: Color;
+    static BLUE: any;
+
+    constructor(r: number, g: number, b: number, a: number = 255) {
         this.r = r;
         this.g = g;
         this.b = b;
@@ -50,4 +82,4 @@ Color.CYAN = Color.cyan;
 Color.blue = new Color(0, 0, 255);
 Color.BLUE = Color.blue;
 
-module.exports = Color;
+export default Color;

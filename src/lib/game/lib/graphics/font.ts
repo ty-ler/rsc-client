@@ -1,5 +1,10 @@
 class Font {
-    constructor(name, type, size) {
+    name: any;
+    type: any;
+    size: any;
+    static BOLD: number;
+
+    constructor(name: string, type: number, size: number) {
         this.name = name;
         this.type = type;
         this.size = size;
@@ -22,5 +27,5 @@ class Font {
 
 Font.BOLD = 1;
 
-module.exports = Font;
+export default Font;
 
