@@ -740,6 +740,7 @@ class GameShell {
 		const jagexJag = await this.readDataFile('jagex.jag', 'Jagex library', 0);
 
 		if (jagexJag) {
+			console.log(jagexJag);
 			const logoTga = Utility.loadData('logo.tga', 0, jagexJag);
 			this.imageLogo = this.parseTGA(logoTga);
 		}

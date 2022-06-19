@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 /* 
   bzip2.js - a small bzip2 decompression implementation
   
@@ -28,9 +26,7 @@
   THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-var bzip2 = {};
-
-bzip2.array = function (bytes) {
+export const array = (bytes) => {
 	var bit = 0,
 		byte = 0;
 	var BITMASK = [0, 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff];
@@ -54,18 +50,19 @@ bzip2.array = function (bytes) {
 	};
 };
 
-bzip2.simple = function (bits) {
-	var size = bzip2.header(bits);
+export const simple = (bits) => {
+	var size = header(bits);
 	var all = '',
 		chunk = '';
 	do {
 		all += chunk;
-		chunk = bzip2.decompress(bits, size);
+		chunk = decompress(bits, size) as any;
+		//@ts-ignore
 	} while (chunk != -1);
 	return all;
 };
 
-bzip2.header = function (bits) {
+export const header = (bits) => {
 	if (bits(8 * 3) != 4348520) throw 'No magic number found';
 	var i = bits(8) - 48;
 	if (i < 1 || i > 9) throw 'Not a BZIP archive';
@@ -75,7 +72,7 @@ bzip2.header = function (bits) {
 //takes a function for reading the block data (starting with 0x314159265359)
 //a block size (0-9) (optional, defaults to 9)
 //a length at which to stop decompressing and return the output
-bzip2.decompress = function (bits, size, len) {
+export const decompress = (bits, size, len?) => {
 	var MAX_HUFCODE_BITS = 20;
 	var MAX_SYMBOLS = 258;
 	var SYMBOL_RUNA = 0;
@@ -151,7 +148,9 @@ bzip2.decompress = function (bits, size, len) {
 		var base = hufGroup.base.subarray(1);
 		var limit = hufGroup.limit.subarray(1);
 		var pp = 0;
+		// @ts-ignore
 		for (var i = minLen; i <= maxLen; i++)
+			// @ts-ignore
 			for (var t = 0; t < symCount; t++) if (length[t] == i) hufGroup.permute[pp++] = t;
 		for (i = minLen; i <= maxLen; i++) temp[i] = limit[i] = 0;
 		for (i = 0; i < symCount; i++) temp[length[i]]++;
@@ -167,6 +166,7 @@ bzip2.decompress = function (bits, size, len) {
 	}
 	var byteCount = new Uint32Array(256);
 	for (var i = 0; i < 256; i++) mtfSymbol[i] = i;
+	// @ts-ignore
 	var runPos, count, symCount, selector;
 	runPos = count = symCount = selector = 0;
 	var buf = new Uint32Array(bufsize);
